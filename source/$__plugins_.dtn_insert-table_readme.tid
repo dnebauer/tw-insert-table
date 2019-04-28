@@ -1,0 +1,78 @@
+created: 20190420063746391
+modified: 20190428063137459
+tags: 
+title: $:/plugins/.dtn/insert-table/readme
+type: text/vnd.tiddlywiki
+
+The <<.def insert-table>> plugin provides a [[macro|Macros]] which inserts a table whose contents are sourced from a [[dictionary tiddler|DictionaryTiddlers]]. (See [[plugin usage|$:/plugins/.dtn/insert-table/usage]] for how to use this macro.)
+
+!! Table components and their source
+
+The table contents are sourced as follows:
+
+; Caption
+
+* Sourced from dictionary tiddler field <<.field column-headings>>.
+* Optional -- omitted from table if field is not present or is empty.
+* The entire field content is used as the caption.
+
+; Column headings
+
+* Sourced from dictionary tiddler field <<.field table-caption>>.
+* Optional -- omitted from table if field is not present or is empty.
+* Space-delimited. If a value includes spaces enclose value in double square brackets.
+
+; Column alignment
+
+* Sourced from dictionary tiddler <<.field column-align>>.
+* Optional -- omitted from table if field is not present or is empty.
+* Space-delimited list of column alignments; first term = alignment of first column, second term = alignment of second column, etc. Thus, if a user wants to specify the alignment of the third column they will have to specify the alignment of the first and second columns as well.
+* Values that can be used for column alignment are any valid values for the css property <<.param text-align>>. Useful values are //left//, //right//, //center//, and //justify//. (The other valid values are //initial// and //inherit//, neither of which are useful in this context.)
+**Since these values are all single word terms there is no need to enclose them in double square brackets.
+
+; Row data
+
+* Sourced from dictionary tiddler content, i.e., <<.field text>> field.
+* Required -- error message is printed if row data is missing.
+* Space-delimited. If a value includes spaces enclose value in double square brackets.
+
+!! Example source tiddler
+
+Here is an example dictionary tiddler which includes all supported table elements:
+
+```tid
+table-caption: Food Colours
+column-headings: [[Food Type]] Name Colour
+type: application/x-tiddler-dictionary
+
+1:Fruit Orange Orange
+2:Fruit Apple [[Red, pink, or green]]
+3:Vegetable [[Spanish onion]] [[White or yellow]]
+```
+
+Empty cells are indicated by `[[ ]]` -- the space ensures that css styling is applied to the cell.
+
+!! Table structure
+
+The table is output as raw html.
+
+Header cells are <<.field td>> elements rather than the more canonical <<.field th>> elements. This is a purely pragmatic decision to ensure tables created by this macro can be styled by the stylesheets provided by the [[Shiraz plugin|https://kookma.github.io/Shiraz/#%24%3A%2Fplugins%2F.mr%2Fshiraz plugin]]. This plugin will switch to outputting <<.field th>> headers cells when they are supported by Shiraz stylesheets.
+
+!! Styling with CSS
+
+Table css styling is very deliberately separated from table content. The css classes to apply to a table are specified in the macro call that inserts the table, and not in the dictionary tiddler containing the table data. This enables the same data to be displayed in different tables with different styling, and even a different sort order. See [[plugin usage|$:/plugins/.dtn/insert-table/usage]] for further details.
+
+!! Column alignment
+
+Column alignment can be specified in two places:
+
+* In the <<.field column-align>> field of the source dictionary tiddler as described above
+* In the macro call that inserts the table -- this overrides any setting in the source dictionary tiddler (see [[plugin usage|$:/plugins/.dtn/insert-table/usage]] for further details).
+
+Column alignment is set by three style elements inserted before the table:
+
+* The first style element sets all columns to left text alignment by default
+* The second style element sets column alignments according to settings in the source dictionary tiddler, if any
+* The third style element sets column alignments according to the macro call, if any.
+
+Later style elements overwrite earlier settings. The first style element ensures that any style settings for tables do not affect subsequent tables in the same tiddler. 

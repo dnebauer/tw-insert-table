@@ -1,0 +1,94 @@
+created: 20190317111849507
+modified: 20190428065653512
+tags: $:/tags/Macro
+title: $:/plugins/.dtn/insert-table/macros
+type: text/vnd.tiddlywiki
+
+\define insert-table(source classes sort-op:"nsort[]" align)
+<$vars source="$source$" classes="$classes$" sort-op="$sort-op$" align="$align$">
+<<__insert-table>>
+</$vars>
+\end
+\define __all-row-sizes()
+<$list filter="[<source>indexes[]nsort[]]" variable="rowIndex">
+<$set name="rowCells" tiddler=<<source>> index=<<rowIndex>> >
+{{{ [enlistallowduplicates<rowCells>count[]] }}}
+</$set>
+</$list>
+\end
+\define __max-row-size()
+<$wikify name="all-row-sizes" text=<<__all-row-sizes>> output="text">
+{{{ [enlist<all-row-sizes>nsort[]last[]] }}}
+</$wikify>
+\end
+\define __source-column-align()
+<$transclude tiddler="$(source)$" field="column-align" mode="inline"/>
+\end
+\define __insert-table()
+<!-- COLUMN ALIGNMENT (optional) -->
+<!-- 1: default all columns to left alignment,
+        to override any previous table styling in tiddler -->
+<style>
+<$wikify name="max-row-size" text=<<__max-row-size>> output="text">
+<$list filter="[range<max-row-size>]" variable="colIndex">
+tr td:nth-child(<<colIndex>>) { text-align: left; }
+</$list>
+</$wikify>
+</style>
+<!-- 2: from source tiddler (optional) -->
+<!--
+wikify rather than set the variable 'source-column-align' to force immediate evaluation,
+otherwise its use within the triple curly braces results in the transclude widget from
+the '__source-column-align' macro being passed to the enlistallowduplicates operator as
+plain text, causing a train wreck; this is presumably due to some form of 'lazy'
+evaluation
+-->
+<style>
+<$wikify name="source-column-align" text=<<__source-column-align>> output="text">
+<$set filter="[enlistallowduplicates<source-column-align>count[]]" name="alignCount">
+<$list filter="[range<alignCount>]" variable="alignIndex">
+tr td:nth-child(<<alignIndex>>) { text-align: <$text text={{{ [enlistallowduplicates<source-column-align>nth<alignIndex>] }}}/>; }
+</$list>
+</$set>
+</$wikify>
+</style>
+<!-- 3: from macro call (optional, overrides source tiddler) -->
+<style>
+<$set filter="[enlistallowduplicates[$(align)$]count[]]" name="alignCount">
+<$list filter="[range<alignCount>]" variable="alignIndex">
+tr td:nth-child(<<alignIndex>>) { text-align: <$text text={{{ [enlistallowduplicates[$(align)$]nth<alignIndex>] }}}/>; }
+</$list>
+</$set>
+</style>
+<!-- STYLE CLASSES (optional) -->
+<table class="$(classes)$">
+<!-- CAPTION (optional) -->
+<$list filter="[<source>get[table-caption]]" variable="tableCaption">
+<caption><$text text=<<tableCaption>>/></caption>
+</$list>
+<!-- HEADER ROW (optional) -->
+<$list filter="[<source>get[column-headings]]" variable="headingsField">
+<thead>
+<tr>
+<$list filter="[enlist<headingsField>]" variable="heading">
+<td><$text text=<<heading>>/></td>
+</$list>
+</tr>
+</thead>
+</$list>
+<!-- DATA ROWS (required) -->
+<tbody>
+<$set name="filter" value="[<source>indexes[]$(sort-op)$]">
+<$list filter=<<filter>> variable="rowIndex" emptyMessage="<tr><td>***NO TABLE DATA***</td></tr>">
+<tr>
+<$set name="rowCells" tiddler=<<source>> index=<<rowIndex>> >
+<$list filter="[enlistallowduplicates<rowCells>]" variable="cell" emptyMessage="<td>***NO ROW DATA***</td>">
+<td><<cell>></td>
+</$list>
+</$set>
+</tr>
+</$list>
+</$set>
+</tbody>
+</table>
+\end
