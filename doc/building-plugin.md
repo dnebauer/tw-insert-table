@@ -52,7 +52,8 @@ Enter the following metadata values:
 
 Search for the key phrase `insert-table` and select the following tiddlers:
 
-* \$:/plugins/.dtn/insert-table/dependency
+* \$:/config/plugin/.dtn/insert-table/style-sets
+* \$:/plugins/.dtn/insert-table/dependencies
 * \$:/plugins/.dtn/insert-table/license
 * \$:/plugins/.dtn/insert-table/macros
 * \$:/plugins/.dtn/insert-table/readme

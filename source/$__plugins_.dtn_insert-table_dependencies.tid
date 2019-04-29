@@ -1,0 +1,19 @@
+created: 20190428025154830
+modified: 20190428030545478
+tags: 
+title: $:/plugins/.dtn/insert-table/dependencies
+type: text/vnd.tiddlywiki
+
+!! Plugin <<.field enlist-allow-duplicates>> (required)
+
+This <<.field insert-table>> plugin relies on a non-core filter operator called <<.op enlistallowduplicates>>, provided by a non-core plugin called <<.field enlist-allow-duplicates>>.
+
+The <<.op enlistallowduplicates>> operator is a direct analogue of the [[enlist|enlist Operator]] operator, which breaks apart a string into a list of values. As might be guessed from its name, <<.op enlistallowduplicates>> preserves duplicate values in the list while <<.op enlist>> deletes duplicate values, returning a list of unique values.
+
+The <<.op enlistallowduplicates>> is required for the <<.field insert-table>> macro to handle table rows and column alignment specifications with duplicate values.
+
+The <<.field enlist-allow-duplicates>> plugin is provided by the same author as this <<.field insert-table>> plugin, and should be available from the same source.
+
+!! Plugin <<.field Shiraz>> (suggested)
+
+The configuration tiddler provided as part of this <<.field insert-table>> plugin is [[ $:/config/plugin/.dtn/insert-table/style-sets]]. It is not necessary for inserting tables but is provided as a potential method of grouping together commonly used sets for css styles. (See [[plugin usage|$:/plugins/.dtn/insert-table/usage]] for details.) The example style set provided with it uses css styles from the [[Shiraz plugin|https://kookma.github.io/Shiraz/#%24%3A%2Fplugins%2F.mr%2Fshiraz%20plugin]].
