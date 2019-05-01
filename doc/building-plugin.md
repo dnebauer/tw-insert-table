@@ -36,17 +36,17 @@ Open _Control Panel_ > _Tinka Plugin Management_ tab > _Create a new Plugin_ tab
 
 Enter the following metadata values:
 
-|       Field|Value                                   |
-|-----------:|:---------------------------------------|
-| Plugin-Type|plugin                                  |
-| Plugin Path|\$:/plugins/.dtn/insert-table           |
-|      Author|David Nebauer                           |
-|      Source|---                                     |
-|  Dependents|---                                     |
-|        List|readme license                          |
-|Plugin Title|Insert table defined in a data tiddler  |
-|     Version|_0.0.1_ or _increment previous version_ |
-|Core-Version|>=5.1.18                                |
+|       Field|Value                                                        |
+|-----------:|:------------------------------------------------------------|
+| Plugin-Type|plugin                                                       |
+| Plugin Path|\$:/plugins/.dtn/insert-table                                |
+|      Author|David Nebauer                                                |
+|      Source|---                                                          |
+|  Dependents|$:/plugins/.dtn/enlist-allow-duplicates $:/plugins/.mr/shiraz|
+|        List|readme usage dependencies license                            |
+|Plugin Title|Insert table defined in a data tiddler                       |
+|     Version|_0.0.2_ or _increment previous version_                      |
+|Core-Version|>=5.1.18                                                     |
 
 ### Step 2: Add Tiddlers ###
 

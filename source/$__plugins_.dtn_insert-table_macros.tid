@@ -1,5 +1,5 @@
 created: 20190317111849507
-modified: 20190428065653512
+modified: 20190501123755001
 tags: $:/tags/Macro
 title: $:/plugins/.dtn/insert-table/macros
 type: text/vnd.tiddlywiki
@@ -25,9 +25,9 @@ type: text/vnd.tiddlywiki
 <$transclude tiddler="$(source)$" field="column-align" mode="inline"/>
 \end
 \define __insert-table()
-<!-- COLUMN ALIGNMENT (optional) -->
-<!-- 1: default all columns to left alignment,
-        to override any previous table styling in tiddler -->
+<!-- COLUMN ALIGNMENT 1: set default -->
+<!-- default all columns to left alignment,
+     to remove user-set text-align settings -->
 <style>
 <$wikify name="max-row-size" text=<<__max-row-size>> output="text">
 <$list filter="[range<max-row-size>]" variable="colIndex">
@@ -35,7 +35,7 @@ tr td:nth-child(<<colIndex>>) { text-align: left; }
 </$list>
 </$wikify>
 </style>
-<!-- 2: from source tiddler (optional) -->
+<!-- COLUMN ALIGNMENT 2: from source tiddler (optional) -->
 <!--
 wikify rather than set the variable 'source-column-align' to force immediate evaluation,
 otherwise its use within the triple curly braces results in the transclude widget from
@@ -52,7 +52,7 @@ tr td:nth-child(<<alignIndex>>) { text-align: <$text text={{{ [enlistallowduplic
 </$set>
 </$wikify>
 </style>
-<!-- 3: from macro call (optional, overrides source tiddler) -->
+<!-- COLUMN ALIGNMENT 3: from macro call (optional, overrides source tiddler) -->
 <style>
 <$set filter="[enlistallowduplicates[$(align)$]count[]]" name="alignCount">
 <$list filter="[range<alignCount>]" variable="alignIndex">
@@ -91,4 +91,14 @@ tr td:nth-child(<<alignIndex>>) { text-align: <$text text={{{ [enlistallowduplic
 </$set>
 </tbody>
 </table>
+<!-- COLUMN ALIGNMENT 4: reset default -->
+<!-- default all columns to left alignment,
+     to remove user-set text-align settings -->
+<style>
+<$wikify name="max-row-size" text=<<__max-row-size>> output="text">
+<$list filter="[range<max-row-size>]" variable="colIndex">
+tr td:nth-child(<<colIndex>>) { text-align: left; }
+</$list>
+</$wikify>
+</style>
 \end
