@@ -1,67 +1,33 @@
 created: 20190317111849507
-modified: 20190501123755001
+modified: 20190509120753162
 tags: $:/tags/Macro
 title: $:/plugins/.dtn/insert-table/macros
 type: text/vnd.tiddlywiki
 
 \define insert-table(source classes sort-op:"nsort[]" align)
 <$vars source="$source$" classes="$classes$" sort-op="$sort-op$" align="$align$">
+<$set name="uuid-class" value=<<__insert-table_uuid>> >
+<$set name="all-classes" value=<<__insert-table_all-classes>> >
 <<__insert-table>>
+</$set>
+</$set>
 </$vars>
 \end
-\define __all-row-sizes()
-<$list filter="[<source>indexes[]nsort[]]" variable="rowIndex">
-<$set name="rowCells" tiddler=<<source>> index=<<rowIndex>> >
-{{{ [enlistallowduplicates<rowCells>count[]] }}}
-</$set>
-</$list>
-\end
-\define __max-row-size()
-<$wikify name="all-row-sizes" text=<<__all-row-sizes>> output="text">
-{{{ [enlist<all-row-sizes>nsort[]last[]] }}}
-</$wikify>
-\end
-\define __source-column-align()
-<$transclude tiddler="$(source)$" field="column-align" mode="inline"/>
+\define __insert-table_all-classes()
+$(classes)$ $(uuid-class)$
 \end
 \define __insert-table()
-<!-- COLUMN ALIGNMENT 1: set default -->
-<!-- default all columns to left alignment,
-     to remove user-set text-align settings -->
+<!-- COLUMN ALIGNMENT (optional) -->
 <style>
-<$wikify name="max-row-size" text=<<__max-row-size>> output="text">
-<$list filter="[range<max-row-size>]" variable="colIndex">
-tr td:nth-child(<<colIndex>>) { text-align: left; }
-</$list>
-</$wikify>
-</style>
-<!-- COLUMN ALIGNMENT 2: from source tiddler (optional) -->
-<!--
-wikify rather than set the variable 'source-column-align' to force immediate evaluation,
-otherwise its use within the triple curly braces results in the transclude widget from
-the '__source-column-align' macro being passed to the enlistallowduplicates operator as
-plain text, causing a train wreck; this is presumably due to some form of 'lazy'
-evaluation
--->
-<style>
-<$wikify name="source-column-align" text=<<__source-column-align>> output="text">
-<$set filter="[enlistallowduplicates<source-column-align>count[]]" name="alignCount">
+<$set filter="[inserttableenlist[$(align)$]count[]]" name="alignCount">
 <$list filter="[range<alignCount>]" variable="alignIndex">
-tr td:nth-child(<<alignIndex>>) { text-align: <$text text={{{ [enlistallowduplicates<source-column-align>nth<alignIndex>] }}}/>; }
-</$list>
-</$set>
-</$wikify>
-</style>
-<!-- COLUMN ALIGNMENT 3: from macro call (optional, overrides source tiddler) -->
-<style>
-<$set filter="[enlistallowduplicates[$(align)$]count[]]" name="alignCount">
-<$list filter="[range<alignCount>]" variable="alignIndex">
-tr td:nth-child(<<alignIndex>>) { text-align: <$text text={{{ [enlistallowduplicates[$(align)$]nth<alignIndex>] }}}/>; }
+.$(uuid-class)$ tr th:nth-child(<<alignIndex>>) { text-align: <$text text={{{ [inserttableenlist[$(align)$]nth<alignIndex>] }}}/>; }
+.$(uuid-class)$ tr td:nth-child(<<alignIndex>>) { text-align: <$text text={{{ [inserttableenlist[$(align)$]nth<alignIndex>] }}}/>; }
 </$list>
 </$set>
 </style>
 <!-- STYLE CLASSES (optional) -->
-<table class="$(classes)$">
+<table class="$(all-classes)$">
 <!-- CAPTION (optional) -->
 <$list filter="[<source>get[table-caption]]" variable="tableCaption">
 <caption><$text text=<<tableCaption>>/></caption>
@@ -82,7 +48,7 @@ tr td:nth-child(<<alignIndex>>) { text-align: <$text text={{{ [enlistallowduplic
 <$list filter=<<filter>> variable="rowIndex" emptyMessage="<tr><td>***NO TABLE DATA***</td></tr>">
 <tr>
 <$set name="rowCells" tiddler=<<source>> index=<<rowIndex>> >
-<$list filter="[enlistallowduplicates<rowCells>]" variable="cell" emptyMessage="<td>***NO ROW DATA***</td>">
+<$list filter="[inserttableenlist<rowCells>]" variable="cell" emptyMessage="<td>***NO ROW DATA***</td>">
 <td><<cell>></td>
 </$list>
 </$set>
@@ -91,14 +57,4 @@ tr td:nth-child(<<alignIndex>>) { text-align: <$text text={{{ [enlistallowduplic
 </$set>
 </tbody>
 </table>
-<!-- COLUMN ALIGNMENT 4: reset default -->
-<!-- default all columns to left alignment,
-     to remove user-set text-align settings -->
-<style>
-<$wikify name="max-row-size" text=<<__max-row-size>> output="text">
-<$list filter="[range<max-row-size>]" variable="colIndex">
-tr td:nth-child(<<colIndex>>) { text-align: left; }
-</$list>
-</$wikify>
-</style>
 \end

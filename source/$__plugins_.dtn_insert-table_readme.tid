@@ -1,5 +1,5 @@
 created: 20190420063746391
-modified: 20190428063137459
+modified: 20190509125641936
 tags: 
 title: $:/plugins/.dtn/insert-table/readme
 type: text/vnd.tiddlywiki
@@ -21,14 +21,6 @@ The table contents are sourced as follows:
 * Sourced from dictionary tiddler field <<.field table-caption>>.
 * Optional -- omitted from table if field is not present or is empty.
 * Space-delimited. If a value includes spaces enclose value in double square brackets.
-
-; Column alignment
-
-* Sourced from dictionary tiddler <<.field column-align>>.
-* Optional -- omitted from table if field is not present or is empty.
-* Space-delimited list of column alignments; first term = alignment of first column, second term = alignment of second column, etc. Thus, if a user wants to specify the alignment of the third column they will have to specify the alignment of the first and second columns as well.
-* Values that can be used for column alignment are any valid values for the css property <<.param text-align>>. Useful values are //left//, //right//, //center//, and //justify//. (The other valid values are //initial// and //inherit//, neither of which are useful in this context.)
-**Since these values are all single word terms there is no need to enclose them in double square brackets.
 
 ; Row data
 
@@ -58,21 +50,12 @@ The table is output as raw html.
 
 Header cells are <<.field td>> elements rather than the more canonical <<.field th>> elements. This is a purely pragmatic decision to ensure tables created by this macro can be styled by the stylesheets provided by the [[Shiraz plugin|https://kookma.github.io/Shiraz/#%24%3A%2Fplugins%2F.mr%2Fshiraz plugin]]. This plugin will switch to outputting <<.field th>> headers cells when they are supported by Shiraz stylesheets.
 
-!! Styling with CSS
+!! Styling
 
-Table css styling is very deliberately separated from table content. The css classes to apply to a table are specified in the macro call that inserts the table, and not in the dictionary tiddler containing the table data. This enables the same data to be displayed in different tables with different styling, and even a different sort order. See [[plugin usage|$:/plugins/.dtn/insert-table/usage]] for further details.
+Table styling is very deliberately separated from table content and is specified in the macro call. More specifically, the following can be specified in the macro call:
 
-!! Column alignment
+* The css classes to apply to the table
+* The horizontal alignment of text in each table column
+* The sort order of table rows.
 
-Column alignment can be specified in two places:
-
-* In the <<.field column-align>> field of the source dictionary tiddler as described above
-* In the macro call that inserts the table -- this overrides any setting in the source dictionary tiddler (see [[plugin usage|$:/plugins/.dtn/insert-table/usage]] for further details).
-
-Column alignment is set by three style elements inserted before the table:
-
-* The first style element sets all columns to left text alignment by default
-* The second style element sets column alignments according to settings in the source dictionary tiddler, if any
-* The third style element sets column alignments according to the macro call, if any.
-
-Later style elements overwrite earlier settings. The first style element ensures that any style settings for tables do not affect subsequent tables in the same tiddler. 
+Because these styling parameters are independent of the dictionary tiddler containing the table data, it is possible to display the same data in multiple tables, each with with different styling. See [[plugin usage|$:/plugins/.dtn/insert-table/usage]] for further details.

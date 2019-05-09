@@ -1,19 +1,33 @@
 created: 20190428025154830
-modified: 20190428030545478
+modified: 20190509124533453
 tags: 
 title: $:/plugins/.dtn/insert-table/dependencies
 type: text/vnd.tiddlywiki
 
-!! Plugin <<.field enlist-allow-duplicates>> (required)
+; Developer feature enabling lists with duplicate values
+: <div>
 
-This <<.field insert-table>> plugin relies on a non-core filter operator called <<.op enlistallowduplicates>>, provided by a non-core plugin called <<.field enlist-allow-duplicates>>.
+This plugin uses an internal drop-in replacement for the [[enlist|enlist Operator]] filter operator which is identical except that duplicate items are retained rather than discarded.
 
-The <<.op enlistallowduplicates>> operator is a direct analogue of the [[enlist|enlist Operator]] operator, which breaks apart a string into a list of values. As might be guessed from its name, <<.op enlistallowduplicates>> preserves duplicate values in the list while <<.op enlist>> deletes duplicate values, returning a list of unique values.
+The replacement filter operator relies on a poorly documented feature of the <<.op "$tw.utils.parseStringArray()">> macro as defined in the <<.var boot/boot.js>> file. According to the release notes for Tiddlywiki version 5.1.18 ([[local|Release 5.1.18]], [[web|https://tiddlywiki.com/#Release%205.1.18]]), the //Developer Bug Fixes and Improvements// include:
 
-The <<.op enlistallowduplicates>> is required for the <<.field insert-table>> macro to handle table rows and column alignment specifications with duplicate values.
+<<<
+[[Refactored|https://github.com/Jermolene/TiddlyWiki5/pull/2027]] `$tw.utils.parseStringArray()` to optionally allow non-unique entries
+<<<
 
-The <<.field enlist-allow-duplicates>> plugin is provided by the same author as this <<.field insert-table>> plugin, and should be available from the same source.
+The link in the release note is to the github pull request that altered  <<.op "$tw.utils.parseStringArray()">> to optionally return list values that retain duplicate items.
 
-!! Plugin <<.field Shiraz>> (suggested)
+The replacement filter operator provided by this plugin makes use of this undocumented optional behaviour of <<.op "$tw.utils.parseStringArray()">>.
 
-The configuration tiddler provided as part of this <<.field insert-table>> plugin is [[ $:/config/plugin/.dtn/insert-table/style-sets]]. It is not necessary for inserting tables but is provided as a potential method of grouping together commonly used sets for css styles. (See [[plugin usage|$:/plugins/.dtn/insert-table/usage]] for details.) The example style set provided with it uses css styles from the [[Shiraz plugin|https://kookma.github.io/Shiraz/#%24%3A%2Fplugins%2F.mr%2Fshiraz%20plugin]].
+</div>
+
+; Shiraz plugin (suggested)
+: <div>
+
+The configuration tiddler provided as part of this plugin is [[$:/config/plugin/.dtn/insert-table/style-sets]].
+
+The configuration tiddler is not necessary for inserting tables but is provided as a potential method of grouping together commonly used sets for css styles. (See [[plugin usage|$:/plugins/.dtn/insert-table/usage]] for details.)
+
+The example style set provided in the configuration tiddler uses css styles from the [[Shiraz plugin|https://kookma.github.io/Shiraz/#%24%3A%2Fplugins%2F.mr%2Fshiraz%20plugin]].
+
+</div>

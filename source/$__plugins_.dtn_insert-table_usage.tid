@@ -1,10 +1,10 @@
 created: 20190420071759697
-modified: 20190428063318567
+modified: 20190509122003068
 tags: 
 title: $:/plugins/.dtn/insert-table/usage
 type: text/vnd.tiddlywiki
 
-This plugin provides the <<.def insert-table>> which inserts a table whose contents are sourced from a [[dictionary tiddler|DictionaryTiddlers]]. (See [[plugin readme|$:/plugins/.dtn/insert-table/readme]] for further details about the source tiddler and the resulting table output.)
+This plugin provides the <<.def insert-table>> macro which inserts a table whose contents are sourced from a [[dictionary tiddler|DictionaryTiddlers]]. (See [[plugin readme|$:/plugins/.dtn/insert-table/readme]] for further details about the source tiddler and the resulting table output.)
 
 !! Parameters
 
@@ -33,7 +33,7 @@ This plugin provides the <<.def insert-table>> which inserts a table whose conte
 * Optional – omitted from table if field is not present or is empty.
 * Space-delimited list of column alignments; first term = alignment of first column, second term = alignment of second column, etc. Thus, if a user wants to specify the alignment of the third column they will have to specify the alignment of the first and second columns as well.
 * Values that can be used for column alignment are any valid values for the css property <<.param text-align>>. Useful values are //left//, //right//, //center//, and //justify//. (The other valid values are //initial// and //inherit//, neither of which are useful in this context.)
-**Since these values are all single word terms there is no need to enclose them in double square brackets.
+** Since these values are all single word terms there is no need to enclose them in double square brackets.
 
 !! Config tiddler
 
@@ -52,15 +52,3 @@ The default version of this tiddler contains a single example field called <<.fi
             sort-op="!nsort[]"
             align="left right center justify"/>
 ```
-
-!! Column alignment
-
-The [[plugin readme|$:/plugins/.dtn/insert-table/readme]] describes how sequential column alignment styles are applied:
-
-* First, all columns are set to default left alignment
-* Second, any alignments specified in the source tiddler's <<.field column-align>> field
-* Finally, any alignments specified in the macro's <<.param align>> parameter
-
-Later styles overwrite earlier styles, thus the macro's <<.param align>> parameter will override the source tiddler's <<.field column-align>> field.
-
-The [[plugin readme|$:/plugins/.dtn/insert-table/readme]] describes a deliberate decision to separate css styling from table content, by specifying it through the table insertion macro call rather than the source data tiddler. Column alignment, by contrast, can be defined in both the table data tiddler and table insertion macro call, because column alignment can have //semantic meaning// as well being simply for styling. For example, right-aligning a currency column, i.e., numbers with two decimal places, ensures that digits of the same order of magnitude occur in the same horizontal position. This helps convey semantic meaning and might appropriately be defined in the source data tiddler. On the other hand, right-aligning a column to move its contents up to the following column simply to improve aesthetic appearance or readability, such as if date and time columns are adjacent, might appropriately be defined in the table insertion macro call.

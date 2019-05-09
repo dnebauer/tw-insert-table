@@ -1,7 +1,7 @@
 # Tiddlywiki Plugin: Insert Table #
 
-This plugin provides filter operator `enlistallowduplicates`, a drop in
-replacement for the `enlist` operator that retains duplicate list items.
+Provides the `<<insert-table>>` macro which inserts a table whose contents are
+sourced from a dictionary tiddler.
 
 ## Installation ##
 
