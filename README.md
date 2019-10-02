@@ -5,12 +5,23 @@ sourced from a dictionary tiddler.
 
 ## Installation ##
 
+### Single file wiki ##
+
 Install plugin file
-[$\_\_plugins\_.dtn\_insert-table.tid](https://github.com/dnebauer/tw-insert-table/blob/master/plugin/%24__plugins_.dtn_insert-table.tid)
-by:
+[$\_\_plugins\_.dtn\_insert-table.tid](https://github.com/dnebauer/tw-insert-table/blob/master/%24__plugins_.dtn_insert-table.tid)
+to a single file wiki by:
 
 * Dragging and dropping it into your wiki, or
 * Saving the plugin tiddler file and importing it into your wiki.
+
+### Node.js server wiki ###
+
+Copy the contents of the `source` subdirectory to a suitable subdirectory under
+the server plugins directory, and update individual wiki `tiddlywiki.info`
+files accordingly.
+
+Note: the server plugins directory may be something like
+`/usr/local/lib/node_modules/tiddlywiki/plugins/`.
 
 ## License ##
 
