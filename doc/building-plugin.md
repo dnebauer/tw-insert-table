@@ -45,7 +45,7 @@ Enter the following metadata values:
 |  Dependents|                                                             |
 |        List|readme usage dependencies credits license                    |
 |Plugin Title|Insert table defined in a data tiddler                       |
-|     Version|_0.0.3_ or _increment previous version_                      |
+|     Version|_0.0.4_ or _increment previous version_                      |
 |Core-Version|>=5.1.18                                                     |
 
 ### Step 2: Add Tiddlers ###
