@@ -1,6 +1,7 @@
 borderless-orange: table-borderless table-striped-row thead-orange caption-top
 created: 20190314092216872
 modified: 20190424101421833
+revision: 0
 title: $:/config/plugin/.dtn/insert-table/style-sets
 type: text/vnd.tiddlywiki
 

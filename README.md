@@ -8,7 +8,7 @@ sourced from a dictionary tiddler.
 ### Single file wiki ##
 
 Install plugin file
-[$\_\_plugins\_.dtn\_insert-table.tid](https://github.com/dnebauer/tw-insert-table/blob/master/%24__plugins_.dtn_insert-table.tid)
+[$\_\_plugins\_.dtn\_insert-table.json](https://github.com/dnebauer/tw-insert-table/blob/master/%24__plugins_.dtn_insert-table.json)
 to a single file wiki by:
 
 * Dragging and dropping it into your wiki, or
